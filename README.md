@@ -1,2 +1,2 @@
-# programmers_algorithm
+# Algorithm
 Programmers Algorithm
