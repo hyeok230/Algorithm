@@ -1,2 +1,2 @@
 # Algorithm
-Programmers Algorithm
+PS
