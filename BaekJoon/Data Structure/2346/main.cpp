@@ -1,6 +1,5 @@
 #include <iostream>
-#include <stack>
-#include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -10,23 +9,50 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n, num;
-	stack<int> s1;
-	stack<int> s2;
-	vector<int> v;
+	int n, num, index, move, push_index, push_move;
+	deque<  pair<int,int> > dq;
+
 	cin >> n;
 
 	for (int i = 0; i < n; i++)
 	{
 		cin >> num;
-		v.push_back(num);
-		s1.push(i + 1);
+		dq.push_back(make_pair(i + 1, num));
 	}
 
-	for (int i = 0; i < n; i++)
+	index = dq.front().first;
+	move = dq.front().second;
+	dq.pop_front();
+	cout << index << " ";
+
+	while (!dq.empty())
 	{
-		
+		if (move >= 0)
+		{
+			for (int i = 0; i < move -1; i++)
+			{
+				push_index = dq.front().first;
+				push_move = dq.front().second;
+				dq.pop_front();
+				dq.push_back(make_pair(push_index, push_move));
+			}
+			index = dq.front().first;
+			move = dq.front().second;
+			dq.pop_front();
+			cout << index << " ";
+		} else {
+			move *= -1;
+			for (int i = 0; i < move -1; i++)
+			{
+				push_index = dq.back().first;
+				push_move = dq.back().second;
+				dq.pop_back();
+				dq.push_front(make_pair(push_index, push_move));
+			}
+			index = dq.back().first;
+			move = dq.back().second;
+			dq.pop_back();
+			cout << index << " ";
+		}
 	}
-
-
 }
