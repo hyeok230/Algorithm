@@ -6,45 +6,37 @@
 using namespace std;
 #define MAX 1001
 
-int n, m;
+int N, M;
 int map[MAX][MAX];
-int check[MAX][MAX];
-queue< pair<int, int> > q;
+int dist[MAX][MAX];
+int dy[] = {-1, 0, 1, 0};
+int dx[] = {0, 1, 0, -1};
 int u, v;
+queue< pair<int, int> > q;
 
-void bfs(int i, int j)
+void bfs(int a, int b)
 {
-    q.push(make_pair(i, j));
+    q.push(make_pair(a, b));
+    
     while (!q.empty())
     {
-        int a, b;
-        a = q.front().first;
-        b = q.front().second;
+        int i = q.front().first;
+        int j = q.front().second;
         q.pop();
-        
-        if (a - 1 >= 0 && b >= 0 && a - 1 < n && b < m && map[a - 1][b] == 1 && !check[a - 1][b])
+
+        for (int k = 0; k < 4; k++)
         {
-            check[a - 1][b] = check[a][b] + 1;
-            q.push(make_pair(a - 1, b));
-        }
-        if (a >= 0 && b + 1 >= 0 && a < n && b + 1 < m && map[a][b + 1] == 1 && !check[a][b + 1])
-        {
-            check[a][b + 1] = check[a][b] + 1;
-            q.push(make_pair(a, b + 1));
-        }
-        if (a + 1 >= 0 && b >= 0 && a + 1 < n && b < m && map[a + 1][b] == 1 && !check[a + 1][b])
-        {
-            check[a + 1][b] = check[a][b] + 1;
-            q.push(make_pair(a + 1, b));
-        }
-        if (a >= 0 && b - 1 >= 0 && a < n && b - 1 < m && map[a][b - 1] == 1 && !check[a][b - 1])
-        {
-            check[a][b - 1] = check[a][b] + 1;
-            q.push(make_pair(a, b - 1));
+            int n = i + dy[k];
+            int m = j + dx[k];
+            if (n >= 0 && m >= 0 && n < N && m < M && map[n][m] == 1 && !dist[n][m])
+            {
+                dist[n][m] = dist[i][j] + 1;
+                q.push(make_pair(n, m));
+            }
         }
     }
-}
 
+}
 
 int main()
 {
@@ -52,14 +44,15 @@ int main()
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-    cin >> n >> m;
+    cin >> N >> M;
 
     int num;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < N; i++)
     {
-        for (int j = 0; j < m; j++)
+        for (int j = 0; j < M; j++)
         {
             cin >> num;
+
             if (num == 2)
             {
                 u = i;
@@ -71,21 +64,22 @@ int main()
 
     bfs(u, v);
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < N; i++)
     {
-        for (int j = 0; j < m; j++)
+        for (int j = 0; j < M; j++)
         {
-            if (map[i][j] == 1 && !check[i][j])
-                check[i][j] = -1;
+            if (map[i][j] == 1 && !dist[i][j])
+            {
+                dist[i][j] = -1;
+            }
         }
     }
 
-
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < N; i++)
     {
-        for (int j = 0; j < m; j++)
+        for (int j = 0; j < M; j++)
         {
-            cout << check[i][j] << " ";
+            cout << dist[i][j] << " ";
         }
         cout << "\n";
     }
