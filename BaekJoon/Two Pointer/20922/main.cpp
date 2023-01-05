@@ -1,18 +1,14 @@
 #include <iostream>
 #include <memory.h>
+#include <algorithm>
 
-#define MAX 100001
+#define MAX 200001
 using namespace std;
 
 int N, K;
 int arr[MAX];
 int result;
-int count[101];
-
-void clear_count()
-{
-    memset(count, 0, sizeof(count));
-}
+int countN[100001];
 
 int main()
 {
@@ -22,23 +18,19 @@ int main()
 
     cin >> N >> K;
 
+    int start = 0;
+    int result = 0;
+
     for (int i = 0; i < N; i++)
     {
         cin >> arr[i];
-    }
-
-    int tmp = 0;
-    for (int i = 0; i < N; i++)
-    {
-        count[arr[i]]++;
-        if (count[arr[i]] > K)
+        countN[arr[i]]++;
+        while (countN[arr[i]] > K)
         {
-            if (result < tmp)
-                result = tmp;
-            tmp = 0;
-            clear_count();
+            countN[arr[start++]]--;
         }
-        tmp++;
+        result = max(result, i - start + 1);
     }
     cout << result;
+    return 0;
 }
