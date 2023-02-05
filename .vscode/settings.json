@@ -5,6 +5,9 @@
 		"queue": "cpp",
 		"iostream": "cpp",
 		"ios": "cpp",
-		"xiosbase": "cpp"
+		"xiosbase": "cpp",
+		"__bit_reference": "cpp",
+		"algorithm": "cpp",
+		"__locale": "cpp"
 	}
 }
