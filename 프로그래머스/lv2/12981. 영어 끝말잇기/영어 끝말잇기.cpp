@@ -2,23 +2,23 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include <set>
+#include <unordered_map>
 
 using namespace std;
 
 vector<int> solution(int n, vector<string> words) {
     vector<int> answer;
-    set<string> s;
+    unordered_map<string, int> m;
     char c = words[0][0];
     int fail = 1;
     for (int i = 0; i < words.size(); ++i) {
         if (words[i][0] != c) {
             break;
         }
-        if (s.count(words[i])) {
+        if (m[words[i]]) {
             break;
         }
-        s.insert(words[i]);
+        m[words[i]] = 1;
         c = words[i][words[i].size() - 1];
         fail++;
     }
